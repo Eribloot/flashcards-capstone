@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { createDeck } from "../../utils/api";
 
 function CreateDeck() {
   const history = useHistory();
+  const [newDeck, setNewDeck] = useState({ name: "", desription: "" });
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const response = await createDeck(newDeck);
+    history.push(`/decks/${response.id}`);
+  }
+
+  const handleChange=(event)=>{
+    setNewDeck({...newDeck,[event.target.name]:event.target.value})
+}
+
   return (
     <>
       <div>
@@ -19,20 +32,31 @@ function CreateDeck() {
       </div>
 
       <div>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label className="name">Name</label>
-            <input type="name" id="name" name="name" placeholder="Deck Name" />
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Deck Name"
+              onChange={handleChange}
+              value={newDeck.name}
+              style={{ width: "100%" }}
+            />
           </div>
           <div className="form-group">
             <label className="description">Description</label>
             <textarea
+              name="description"
+              id="description"
               type="textarea"
               rows="3"
-              id="description"
-              name="description"
               placeholder="Brief description of deck"
-            />
+              onChange={handleChange}
+              value={newDeck.description}
+              style={{ width: "100%" }}
+            ></textarea>
           </div>
           <button
             type="button"
@@ -41,7 +65,10 @@ function CreateDeck() {
           >
             Cancel
           </button>
-          <button type="submit" className="btn btn-primary">
+          <button 
+          type="submit" 
+          className="btn btn-primary"
+          onClick={handleSubmit}>
             Submit
           </button>
         </form>
