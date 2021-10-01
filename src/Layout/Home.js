@@ -23,7 +23,7 @@ function Home() {
         className="btn btn-secondary"
         onClick={() => history.push("/decks/new")}
       >
-        + Create Deck
+         Create Deck
       </button>
       <DeckList decks={decks} />
     </>

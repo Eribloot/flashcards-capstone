@@ -6,8 +6,8 @@ function EditDeck() {
   const history = useHistory();
   const deckObj = { name: "", description: "" };
   const [deck, setDeck] = useState(deckObj);
-  const [name, setName] = useState(deck.name);
-  const [description, setDescription] = useState(deck.description);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
   const { deckId } = useParams();
 
   useEffect(() => {
@@ -16,6 +16,8 @@ function EditDeck() {
     async function loadDeck() {
       const getDeckFromAPI = await readDeck(deckId, abortController.signal);
       setDeck(getDeckFromAPI);
+      setName(getDeckFromAPI.name);
+      setDescription(getDeckFromAPI.description);
     }
     loadDeck();
     return () => abortController.abort();
@@ -68,7 +70,7 @@ function EditDeck() {
               type="text"
               className="form-control"
               id="name-change"
-              value={deck.name}
+              defaultValue={deck.name}
               onChange={handleNameChange}
             />
           </div>
@@ -79,7 +81,7 @@ function EditDeck() {
               className="form-control"
               id="description-change"
               rows="3"
-              value={deck.description}
+              defaultValue={deck.description}
               onChange={handleDescriptionChange}
             />
           </div>

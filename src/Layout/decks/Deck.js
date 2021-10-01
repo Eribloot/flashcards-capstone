@@ -62,11 +62,12 @@ function Deck() {
             event.preventDefault();
             if (
               window.confirm(
-                "Delete this card? you won't be able to reverse this."
+                "Delete this deck? you won't be able to reverse this."
               )
             ) {
-              await deleteCard(deck.card.id);
-              history.go(`/decks/${deckId}`);
+              await deleteDeck(deck.id);
+              history.push(`/`);
+              window.location.reload(false);
             }
           }}
         >
@@ -92,14 +93,16 @@ function Deck() {
                 <a
                   href={`/decks/${deck.id}`}
                   className="btn btn-danger"
-                  onClick={() => {
+                  onClick={async (event) => {
+                    event.preventDefault()
                     if (
+                      
                       window.confirm(
-                        "Delete this deck? This cannot be undone. "
+                        "Delete this card? This cannot be undone. "
                       )
                     )
-                      deleteDeck(`${deck.id}`);
-                    history.go("/");
+                      await deleteCard(card.id);
+                    history.go(`/decks/${deck.id}`);
                   }}
                 >
                   Delete

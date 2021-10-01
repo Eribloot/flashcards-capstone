@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useParams, Link, useHistory } from "react-router-dom";
 
-function CardList({ cards }) {
+function CardList({ cards, deck }) {
   const history = useHistory();
-  const deckId = useParams();
+  const { deckId } = useParams();
 
   const [currentCard, setCurrentCard] = useState(0);
   const [frontFace, setFrontFace] = useState(true);
@@ -66,10 +66,10 @@ function CardList({ cards }) {
       <div>
         <h3>Not enough cards!</h3>
         <p>
-          You need at least three cards to study a deck. There are{""}
-          {cards ? cards.length : 0} cards in this deck.
+          You need at least three cards to study a deck. There are{" "}
+          {cards ? cards.length : 0} card(s) in this deck.
         </p>
-        <Link to={`decks/${deckId}/card/new`} className="btn btn-primary ml-3">
+        <Link to={`/decks/${deckId}/cards/new`} className="btn btn-primary ml-3">
           Add Cards
         </Link>
       </div>

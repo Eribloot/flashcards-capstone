@@ -25,14 +25,14 @@ function DeckList({ decks }) {
               <a
                 href="/"
                 className="btn btn-danger"
-                onClick={(event) => {
+                onClick={ async (event) => {
                   event.preventDefault();
                   if (
                     window.confirm(
                       "Delete this deck? You won't be able to recover it."
                     )
                   ) {
-                    deleteDeck(`${deck.id}`);
+                    await deleteDeck(deck.id);
                     history.go("/");
                   }
                 }}

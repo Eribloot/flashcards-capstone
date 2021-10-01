@@ -4,13 +4,15 @@ import { readDeck } from "../../utils/api";
 import CardList from "../cards/CardList";
 
 function Study() {
-  const [deck, setDeck] = useState({});
+  const [deck, setDeck] = useState([]);
   const { deckId } = useParams();
 
   useEffect(() => {
-    async function loadDeck() {
+    async function loadDeck() 
+    {
       const deckFromAPI = await readDeck(deckId);
       setDeck(deckFromAPI);
+      
     }
     loadDeck();
   }, [deckId]);
@@ -20,14 +22,14 @@ function Study() {
       <div>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
-            <li>
+            <li className = "breadcrumb-item">
               <a href="/">Home</a>
             </li>
             <li className="breadcrumb-item">
               <a href={`/decks/${deckId}`}>{deck.name}</a>
             </li>
-            <li className="breadcrumb-item-active" aria-current="page">
-              Study
+            <li className="breadcrumb-item active" aria-current="page">
+               Study
             </li>
           </ol>
         </nav>

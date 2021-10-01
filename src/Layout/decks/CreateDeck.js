@@ -4,16 +4,22 @@ import { createDeck } from "../../utils/api";
 
 function CreateDeck() {
   const history = useHistory();
-  const [newDeck, setNewDeck] = useState({ name: "", desription: "" });
-
-  async function handleSubmit(event) {
-    event.preventDefault();
-    const response = await createDeck(newDeck);
-    history.push(`/decks/${response.id}`);
-  }
+  const [deck, setDeck] = useState({  name: "", description: "" });
 
   const handleChange=(event)=>{
-    setNewDeck({...newDeck,[event.target.name]:event.target.value})
+    setDeck({...deck, [event.target.name]: event.target.value })
+}
+
+const handleSubmit = (event) => {
+  event.preventDefault();
+  async function create()
+  {
+    const newDeck = await createDeck(deck);
+
+    return newDeck;
+  }
+  create()
+  .then(response => history.push(`/decks/${response.id}`))
 }
 
   return (
@@ -30,9 +36,9 @@ function CreateDeck() {
           </ol>
         </nav>
       </div>
-
+      <h3>Create Deck</h3>
       <div>
-        <form onSubmit={handleSubmit}>
+        <form>
           <div className="form-group">
             <label className="name">Name</label>
             <input
@@ -41,7 +47,7 @@ function CreateDeck() {
               name="name"
               placeholder="Deck Name"
               onChange={handleChange}
-              value={newDeck.name}
+              value={deck.name}
               style={{ width: "100%" }}
             />
           </div>
@@ -54,7 +60,7 @@ function CreateDeck() {
               rows="3"
               placeholder="Brief description of deck"
               onChange={handleChange}
-              value={newDeck.description}
+              value={deck.description}
               style={{ width: "100%" }}
             ></textarea>
           </div>
@@ -68,7 +74,8 @@ function CreateDeck() {
           <button 
           type="submit" 
           className="btn btn-primary"
-          onClick={handleSubmit}>
+          onClick={handleSubmit}
+          >
             Submit
           </button>
         </form>
